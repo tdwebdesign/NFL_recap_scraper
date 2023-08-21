@@ -7,6 +7,19 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+import os
+import sys
+
+# Path to your Django project
+sys.path.append('/home/thomas/Documents/Projects/thomasd9e')
+print(sys.path)
+
+# Set Django's settings module
+os.environ['DJANGO_SETTINGS_MODULE'] = 'thomasd9e.settings'
+
+import django
+django.setup()
+
 BOT_NAME = "NFL_recap_scraper"
 
 SPIDER_MODULES = ["NFL_recap_scraper.spiders"]
@@ -17,7 +30,7 @@ NEWSPIDER_MODULE = "NFL_recap_scraper.spiders"
 #USER_AGENT = "NFL_recap_scraper (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -62,9 +75,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    "NFL_recap_scraper.pipelines.NflRecapScraperPipeline": 300,
-#}
+ITEM_PIPELINES = {
+    "NFL_recap_scraper.pipelines.DjangoSavePipeline": 1,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
